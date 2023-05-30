@@ -1,0 +1,171 @@
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Explanation: 
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+The distinct triplets are [-1,0,1] and [-1,-1,2].
+Notice that the order of the output and the order of the triplets does not matter.
+Example 2:
+
+Input: nums = [0,1,1]
+Output: []
+Explanation: The only possible triplet does not sum up to 0.
+
+
+Soln:
+
+package com.java;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        System.out.println(threeSum(new int[]{-1,0,1,2,-1,-4}));
+    }
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> threeSumList = new ArrayList<>();
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length - 2; i++){
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int j = i+1;
+            int k = nums.length-1;
+            while(j < k) {
+                if(nums[i] + nums[j] + nums[k] == 0) {
+                    threeSumList.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j++;
+                    k--;
+                    while (j < k && nums[j] == nums[j - 1]) {
+                        j++;
+                    }
+                    while (j < k && nums[k] == nums[k + 1]) {
+                        k--;
+                    }
+                }
+                if(nums[i] + nums[j] + nums[k] > 0){
+                    k--;
+                }
+                if(nums[i] + nums[j] + nums[k] < 0){
+                    j++;
+                }
+            }
+        }
+        return threeSumList;
+    }
+}
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
+
+Return the sum of the three integers.
+
+You may assume that each input would have exactly one solution.
+
+ 
+
+Example 1:
+
+Input: nums = [-1,2,1,-4], target = 1
+Output: 2
+Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+Example 2:
+
+Input: nums = [0,0,0], target = 1
+Output: 0
+Explanation: The sum that is closest to the target is 0. (0 + 0 + 0 = 0).
+ 
+
+Constraints:
+
+3 <= nums.length <= 500
+-1000 <= nums[i] <= 1000
+-104 <= target <= 104
+
+
+
+Soln:
+---------------------------------------------------------------------------------------------------------------------------------------------
+18. 4Sum
+Medium
+9.3K
+1.1K
+Companies
+Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+
+0 <= a, b, c, d < n
+a, b, c, and d are distinct.
+nums[a] + nums[b] + nums[c] + nums[d] == target
+You may return the answer in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [1,0,-1,0,-2,2], target = 0
+Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+Example 2:
+
+Input: nums = [2,2,2,2,2], target = 8
+Output: [[2,2,2,2]]
+ 
+
+Constraints:
+
+1 <= nums.length <= 200
+-109 <= nums[i] <= 109
+-109 <= target <= 109
+
+
+Soln:
+
+package com.java;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        System.out.println(fourSum(new int[]{2,2,2,2,2},8));
+    }
+
+    public static List<List<Integer>> fourSum(int[] nums, int target) {
+        int length = nums.length;
+        List<List<Integer>> resultList = new ArrayList<>();
+        Arrays.sort(nums);
+        for(int a = 0, d = length-1; a < length- 3 && d > 2; a++,d--) {
+            if(a>0 && nums[a] == nums[a-1]) {
+                continue;
+            }
+            if(d < length-1  && nums[d] == nums[d+1]) {
+                continue;
+            }
+            int b = a+1;
+            int c = d-1;
+            while (b < c) {
+
+                int sum = nums[a]+nums[b]+nums[c]+nums[d];
+                if(sum == target ) {
+                    resultList.add(Arrays.asList(nums[a], nums[b], nums[c], nums[d]));
+                }
+                if(sum < target) {
+                    b++;
+                }
+                else {
+                    c--;
+                }
+            }
+        }
+        return resultList;
+    }
+}
+
+
